@@ -8,8 +8,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
   List<Customer> findByLastName(String lastName);
 
-  List<Customer> findByEmail(String email);
-
   Customer findById(long id);
 
 }

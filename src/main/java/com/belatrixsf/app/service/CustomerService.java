@@ -5,14 +5,16 @@ import java.util.List;
 
 public interface CustomerService {
 
-  Customer addCustomer(Customer customer);
-
   Customer getCustomerId(long id);
+
+  Customer saveCustomer(Customer customer);
+
+  void updateCustomer(Customer customer);
+
+  void deleteCustomerById(long id);
 
   List<Customer> findAllCustomers();
 
   List<Customer> findCustomersByLastName(String lastName);
-
-
 
 }

@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Customer {
@@ -12,10 +14,13 @@ public class Customer {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @NotNull
   private String firstName;
 
+  @NotNull
   private String lastName;
 
+  @Email
   private String email;
 
 
@@ -23,6 +28,11 @@ public class Customer {
   }
 
   public Customer(String firstName, String lastName, String email) {
+    this(null, firstName, lastName, email);
+  }
+
+  public Customer(Long id, String firstName, String lastName, String email) {
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -60,4 +70,5 @@ public class Customer {
   public void setEmail(String email) {
     this.email = email;
   }
+
 }

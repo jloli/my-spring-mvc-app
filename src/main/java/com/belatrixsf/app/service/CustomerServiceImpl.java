@@ -16,6 +16,16 @@ public class CustomerServiceImpl implements CustomerService {
     this.customerRepository = customerRepository;
   }
 
+
+  @Override
+  public Customer getCustomerId(long id) {
+    Customer customer = customerRepository.findById(id);
+    if (customer == null) {
+      throw new CustomerNotFoundException(id);
+    }
+    return customer;
+  }
+
   @Override
   public List<Customer> findAllCustomers() {
     ArrayList<Customer> customers = new ArrayList<>();
@@ -29,17 +39,24 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Override
-  public Customer addCustomer(Customer customer) {
+  public Customer saveCustomer(Customer customer) {
     return customerRepository.save(customer);
   }
 
   @Override
-  public Customer getCustomerId(long id) {
-    Customer customer = customerRepository.findById(id);
-    if (customer == null) {
+  public void updateCustomer(Customer customer) {
+    if (!customerRepository.existsById(customer.getId())) {
+      throw new CustomerNotFoundException(customer.getId());
+    }
+    customerRepository.save(customer);
+  }
+
+  @Override
+  public void deleteCustomerById(long id) {
+    if (!customerRepository.existsById(id)) {
       throw new CustomerNotFoundException(id);
     }
-    return customer;
+    customerRepository.deleteById(id);
   }
 
 }
