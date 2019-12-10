@@ -4,6 +4,7 @@ import com.belatrixsf.app.dao.entity.Customer;
 import com.belatrixsf.app.dao.repository.CustomerRepository;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,6 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
     customerRepository.save(customer);
   }
 
+  @PreAuthorize("hasAuthority('ROLE_ADMIN')")
   @Override
   public void deleteCustomerById(long id) {
     if (!customerRepository.existsById(id)) {

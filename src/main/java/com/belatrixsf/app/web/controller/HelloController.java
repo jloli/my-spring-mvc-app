@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @ResponseBody
+//http://localhost:8080/hello
 @RequestMapping("/hello")
 public class HelloController {
 

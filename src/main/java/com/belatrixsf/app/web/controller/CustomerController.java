@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
+// http://localhost:8080/customers
 @RequestMapping("/customers")
 @Validated
 public class CustomerController {
@@ -39,22 +41,25 @@ public class CustomerController {
     this.customerService = customerService;
   }
 
-
+  //http://localhost:8080/customers
   @GetMapping
   public List<Customer> findAllCustomers() {
     return customerService.findAllCustomers();
   }
 
+  //http://localhost:8080/customers?lastName=234
   @GetMapping(params = "lastName")
   public List<Customer> findCustomersByLastName(@RequestParam String lastName) {
     return customerService.findCustomersByLastName(lastName);
   }
 
+  //GET http://localhost:8080/customers/1
   @GetMapping("/{customerId}")
   public Customer getCustomerById(@PathVariable long customerId) {
     return customerService.getCustomerId(customerId);
   }
 
+  //POST http://localhost:8080/customers
   @PostMapping
   public ResponseEntity<Customer> addCustomer(@Valid @RequestBody Customer newCustomer) {
     Customer savedCustomer = customerService.saveCustomer(newCustomer);
@@ -67,6 +72,7 @@ public class CustomerController {
     return ResponseEntity.created(location).body(savedCustomer);
   }
 
+  //PUT http://localhost:8080/customers/1
   @PutMapping("/{customerId}")
   @ResponseStatus(HttpStatus.OK)
   public void updateCustomer(@PathVariable long customerId,
@@ -76,6 +82,7 @@ public class CustomerController {
     customerService.updateCustomer(customer);
   }
 
+  //DELETE http://localhost:8080/customers/1
   @DeleteMapping("/{customerId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteCustomerById(@PathVariable long customerId) {
